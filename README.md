@@ -1,1 +1,9 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=9649073&assignment_repo_type=AssignmentRepo)
+### python3.7 虚拟环境
+```
+activate 
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver 
+```
+
+![image](https://user-images.githubusercontent.com/97334034/210070208-2f0afbc6-98bb-453f-a78e-945321a7b42c.png)
