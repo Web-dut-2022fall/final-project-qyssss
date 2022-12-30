@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    文章详情
+{% endblock title %}
+
+{% block content %}
+
+<!-- 文章详情 -->
+<div class="container">
+    <div class="row">
+        <!-- 标题及作者 -->
+        <h1 class="col-12 mt-4 mb-4">{{ article.title }}</h1>
+        <div class="col-12 alert alert-dark" style="display:flex;justify-content:space-between;">
+            <div>
+                Writer:{{ article.author }}
+            </div>
+            <div>
+                浏览量：{{ article.total_views }}
+            </div>
+        </div>
+        <!-- 文章正文 -->
+        <div class="col-12">
+           <p>{{ article.body|safe }}</p>
+        </div>
+        {% if user == article.author %}
+        <div>
+            <a href="#" onclick="confirm_delete()" class="btn btn-outline-dark" style="margin-right:50px">删除文章</a>
+            <a href="{% url "article:article_update" article.id %}" class="btn btn-outline-dark">编辑文章</a>  
+        </div>
+        {% endif %}
+        
+    </div>
+     <!-- 发表评论 -->
+    <hr>
+    {% if user.is_authenticated %}
+        <div>
+            <form 
+                action="{% url 'comment:post_comment' article.id %}" 
+                method="POST"
+            >
+            {% csrf_token %}
+                <div class="form-group">
+                    <label for="body">
+                        <strong>
+                            评论区:
+                        </strong>
+                    </label>
+                    <textarea 
+                        type="text" 
+                        class="form-control" 
+                        id="body" 
+                        name="body" 
+                        rows="2"></textarea>
+                </div>
+                <!-- 提交按钮 -->
+                <button type="submit" class="btn btn-outline-dark ">评论</button>                    
+            </form>
+        </div>
+        <br>
+    {% else %}
+        <br>
+        <h5 class="row justify-content-center">
+            请<a href="{% url 'userprofile:login' %}">登录</a>后回复
+        </h5>
+        <br>
+    {% endif %}
+
+
+
+    <!-- 显示评论 -->
+    <h4>共有{{ comments.count }}条评论</h4>
+    <div>
+        {% for comment in comments %}
+            <hr>
+            <p>
+                <strong style="color: pink">
+                    {{ comment.user }}
+                </strong> 于 
+                <span style="color: green">
+                    {{ comment.created|date:"Y-m-d H:i:s" }}
+                </span> 时说：
+            </p>
+            <pre style="font-family: inherit; font-size: 1em;"> {{ comment.body }} </pre>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    // 删除文章的函数
+    function confirm_delete() {
+        layer.open({
+            title: "删除文章",
+            content: "确认删除吗？",
+            resize: true,
+            skin: 'layui-layer-rim', 
+            area: ['100px', '200px'], 
+            yes: function(index, layero) {
+                location.href='{% url "article:article_delete" article.id %}'
+            },
+        })
+    }
+</script>
+{% endblock content %}

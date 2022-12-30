@@ -1,0 +1,38 @@
+<!-- 定义导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+
+    <a class="navbar-brand" href="#">qyssss的小站</a>
+
+    <div>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'article:article_list' %}">全部文章</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'article:article_create' %}">创建新文章</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="https://github.com/qyssss">Github</a>
+        </li>
+
+        <!-- 登录模块 -->
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ user.username }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url "userprofile:logout" %}">退出登录</a>
+            </div>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'userprofile:login' %}">登录</a>
+        </li>                    
+        {% endif %}
+      </ul>
+    </div>
+
+  </div>
+</nav>

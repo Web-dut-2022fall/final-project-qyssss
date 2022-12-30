@@ -1,0 +1,38 @@
+<!-- 用户登录 -->
+{% extends "base.html" %} {% load staticfiles %}
+{% block title %} 登录 {% endblock title %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <br>
+            <form method="post" action=".">
+                {% csrf_token %}
+                <!-- 账号 -->
+                <div class="form-group">
+                    <label for="username">账号</label>
+                    <input type="text" class="form-control" id="username" name="username">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your name with anyone else.</small>
+                </div>
+                <!-- 密码 -->
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>
+                <!-- 注册和登录按钮 -->
+                <div style="text-align:center">
+                <div>
+                    <button type="submit" class="btn btn-outline-dark" style="width:200px;margin-right:300px">登录</button>
+                    <a href='{% url "userprofile:register" %}' class="btn btn-outline-dark" style="width:200px">注册</a> 
+                </div>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
